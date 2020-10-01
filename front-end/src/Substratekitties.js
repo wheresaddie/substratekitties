@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Grid } from 'semantic-ui-react';
+import { Card, Grid, Header, Icon, Input } from 'semantic-ui-react';
 
 import { useSubstrate } from './substrate-lib';
 
 import { KittyAvatar } from './kitty-avatar';
+import { TxButton } from './substrate-lib/components';
 
 function hexToString (hex) {
   hex = hex.substr(2);
@@ -60,9 +61,40 @@ function Main (props) {
     return () => unsubscribe && unsubscribe();
   }, [kittyCommodities, api.query.substratekitties.metadataForKitty]);
 
+  const [name, setName] = useState('');
+  const handleChange = e => {
+    setName(e.target.value);
+  };
+
   return (
     <Grid.Column>
       <Card.Group>
+        <Card>
+          <Card.Content>
+            <Header as='h4' icon textAlign='center'>
+              <Icon name='paw' size='small' />
+              {kitties.length ? 'New Kitty' : 'First Kitty'}
+            </Header>
+            <code>api.tx.substratekitties.conjure('</code>
+            <Input
+              placeholder='Give kitty a name'
+              onChange={handleChange}
+            />
+            <code>').signAndSend(props.accountPair)</code>
+            <TxButton
+              accountPair={props.accountPair}
+              setStatus={setName}
+              label='Conjure a kitty'
+              type={'SIGNED-TX'}
+              attrs={{
+                palletRpc: 'substratekitties',
+                callable: 'conjure',
+                inputParams: [name],
+                paramFields: ['']
+              }}
+            />
+          </Card.Content>
+        </Card>
         {kitties.map((kitty) => {
           return <Card key={kitty.id}>
             <Card.Content>
