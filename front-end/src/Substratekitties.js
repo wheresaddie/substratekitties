@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Grid, Header, Icon, Input } from 'semantic-ui-react';
+import { Button, Card, Grid, Header, Icon, Input } from 'semantic-ui-react';
 
 import { useSubstrate } from './substrate-lib';
 
 import { KittyAvatar } from './kitty-avatar';
-import { TxButton } from './substrate-lib/components';
 
 function hexToString (hex) {
   hex = hex.substr(2);
@@ -63,14 +62,56 @@ function Main (props) {
 
   return (
     <Grid.Column>
-      <Card.Group>
+      <Card.Group itemsPerRow={3}>
         {kitties.map((kitty) => {
-          return <Card key={kitty.id}>
+          console.log(kitty)
+          return <Card 
+            key={kitty.id}
+            raised
+          >
             <Card.Content>
-              {kitty.name}<br></br>
-              DOB: {kitty.dob.toDateString()}<br></br>
-              Power: {kitty.power}
+              <Grid padded={false}>
+                <Grid.Column width={10}>
+                  <h4>{kitty.name}</h4>
+                </Grid.Column>
+                <Grid.Column width={6} textAlign='right'>
+                  <Icon link name='eraser'/>
+                  <Icon link name='heart'/>
+                  <Icon link name='shopping basket'/>
+                </Grid.Column>
+              </Grid>
+            </Card.Content>
+            <Card.Content textAlign='center'>
               <KittyAvatar dna={kitty.dna} />
+
+              <Button.Group basic compact size='tiny'>
+                <Button>
+                  kitty.id
+                  <br/>
+                  <b>ID</b>
+                </Button>
+                <Button>
+                  owner.id
+                  <br/>
+                  <b>owner</b>
+                </Button>
+                <Button>
+                  {kitty.power}
+                  <br/>
+                  <b>Power</b>
+                </Button>
+                <Button>
+                  <Icon name='heart'/>
+                  <br/>
+                  <b>Flirt</b>
+                </Button>
+                <Button>
+                  <Icon name='shopping basket'/>
+                  <br/>
+                  <b>Buy</b>
+                </Button>
+              </Button.Group>
+              
             </Card.Content>
           </Card>;
         })}
