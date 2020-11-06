@@ -11,6 +11,7 @@ import BlockNumber from './BlockNumber';
 import Events from './Events';
 import Interactor from './Interactor';
 import Substratekitties from './Substratekitties';
+import SubstratekittiesConsole from './SubstratekittiesConsole';
 import Metadata from './Metadata';
 import NodeInfo from './NodeInfo';
 
@@ -64,11 +65,14 @@ function Main () {
     </Grid>
   );
   const TabKitties = () => (
-    <Grid stackable columns='equal'>
-      <Grid.Row stretched>
-        <Substratekitties accountPair={accountPair} />
-      </Grid.Row>
-    </Grid>
+    <>
+      <Grid stackable columns='equal'>
+        <Grid.Row stretched>
+          <Substratekitties accountPair={accountPair} />
+        </Grid.Row>
+      </Grid>
+      <SubstratekittiesConsole accountPair={accountPair} />
+    </>
   );
   const panes = [
     { menuItem: 'Kitties', render: () => <Tab.Pane><TabKitties /></Tab.Pane> },
